@@ -163,6 +163,9 @@ ApplicationInsights.config
 AppPackages/
 BundleArtifacts/
 
+# Mac FS Files
+.DS_Store
+
 # Visual Studio cache files
 # files ending in .cache can be ignored
 *.[Cc]ache

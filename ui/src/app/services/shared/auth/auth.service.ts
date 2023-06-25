@@ -9,6 +9,7 @@ export class AuthService {
 
   constructor(private httpClient: HttpClient) {}
 
+  // this obviously doesn't account for token refreshing etc
   getToken(): Observable<string> {
     return this.token$ ??= this.httpClient
       .get('Authenticate/generate', {

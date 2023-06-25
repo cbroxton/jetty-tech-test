@@ -3,6 +3,7 @@ using api.Models.Employees;
 namespace api.Repositories.Employees;
 
 public class EmployeeAddressRepository : IEmployeeAddressRepository {
+    // spec didn't mention a db so have done this in memory to save time
     private readonly static List<EmployeeAddress> EmployeeAddresses = new() {
         new EmployeeAddress {
             Id = 1,

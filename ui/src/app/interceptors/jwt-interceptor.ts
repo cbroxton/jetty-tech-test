@@ -9,6 +9,7 @@ export const BYPASS_AUTH = new HttpContextToken(() => false);
 export class JwtInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
+  // this obviously doesn't account for token refreshing etc
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.context.get(BYPASS_AUTH)) {
       return next.handle(req);

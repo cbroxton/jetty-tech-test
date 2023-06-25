@@ -25,6 +25,7 @@ export class EmployeeDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // don't think this should be possible? but better safe than sorry
     if (!this.employeeId) {
       this.redirectToNotFound();
     }
@@ -35,6 +36,7 @@ export class EmployeeDetailComponent implements OnInit {
     ])
       .pipe(
         catchError((error: HttpErrorResponse) => {
+          // am making a bit of an assumption here that an employee should always have an address
           if (error.status == 404) {
             this.redirectToNotFound();
           }
