@@ -1,6 +1,8 @@
 using System.Text;
 using api.Models.AppSettings;
-using api.Services;
+using api.Repositories.Employees;
+using api.Services.Auth;
+using api.Services.Employees;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -42,6 +44,12 @@ if (appSettings is not null) {
 }
 
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeAddressRepository, EmployeeAddressRepository>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IEmployeeAddressService, EmployeeAddressService>();
+
+builder.Services.AddAutoMapper(typeof(Program));
 
 var app = builder.Build();
 

@@ -1,8 +1,8 @@
-using api.Services;
+using api.Services.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace api.Controllers;
+namespace api.Controllers.Auth;
 
 [ApiController]
 [Route("[controller]")]

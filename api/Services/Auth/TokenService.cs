@@ -3,7 +3,7 @@ using System.Text;
 using api.Models.AppSettings;
 using Microsoft.IdentityModel.Tokens;
 
-namespace api.Services;
+namespace api.Services.Auth;
 
 public class TokenService : ITokenService {
     private readonly AppSettings _appSettings;
