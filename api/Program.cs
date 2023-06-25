@@ -1,8 +1,6 @@
 using System.Text;
+using api.Extensions;
 using api.Models.AppSettings;
-using api.Repositories.Employees;
-using api.Services.Auth;
-using api.Services.Employees;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -15,25 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services
-    .AddAuthentication(options => {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options => {
-        JWTSettings? jwtSettings = builder.Configuration.GetSection("JWT").Get<JWTSettings>();
-
-        options.TokenValidationParameters = new TokenValidationParameters {
-            ValidIssuer = builder.Configuration["JWT:Issuer"],
-            ValidAudience = builder.Configuration["JWT:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"])),
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = false,
-            ValidateIssuerSigningKey = true
-        };
-    });
+builder.AddCustomAuth();
 
 builder.Services.AddAuthorization();
 
@@ -43,11 +23,9 @@ if (appSettings is not null) {
     builder.Services.AddSingleton(appSettings);
 }
 
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-builder.Services.AddScoped<IEmployeeAddressRepository, EmployeeAddressRepository>();
-builder.Services.AddScoped<IEmployeeService, EmployeeService>();
-builder.Services.AddScoped<IEmployeeAddressService, EmployeeAddressService>();
+builder.Services.AddCustomServices();
+
+builder.Services.AddCorsRules();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
@@ -59,6 +37,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors();
 
 app.UseAuthentication();
 
