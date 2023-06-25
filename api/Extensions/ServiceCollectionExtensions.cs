@@ -17,7 +17,10 @@ public static class ServiceCollectionExtensions {
         services.AddCors(options =>
             options.AddDefaultPolicy(policy =>
                 // not particularly safe but bodges around the issue for purposes of this demo
-                policy.AllowAnyOrigin()
+                policy
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
             )
         );
     }
